@@ -10,8 +10,8 @@ build-backend = "setuptools.build_meta"
 requires_python = ">=3.10"
 
 [tool.setuptools.packages.find]
-where = ["libs"]
-include = ["libs*"]
+include = ["libs", "libs.*"]
+
 
 [tool.setuptools.package-data]
 libs = ["py.typed"]

@@ -1,0 +1,18 @@
+[project]
+name = "libs"
+version = "0.0.0"
+dependencies = []
+
+[build-system]
+requires = ["setuptools>=61.0","wheel"]
+build-backend = "setuptools.build_meta"
+
+requires_python = ">=3.10"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["libs*"]
+
+[tool.setuptools.package-data]
+libs = ["py.typed"]
+

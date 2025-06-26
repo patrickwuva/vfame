@@ -1,5 +1,7 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
 from . import image
+
 class Base:
     def __init__(self, host='localhost'):
        self.info = f"host='{host}' port='5432' user='vf' password='victoria' dbname='frame'"
@@ -9,7 +11,7 @@ class Base:
     def connect(self):
         if self.connection is None or self.cursor is None:
             self.connection = psycopg2.connect(self.info)
-            self.cursor = self.connection.cursor()
+            self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
 
     def close(self):
         if self.cursor:
@@ -17,27 +19,15 @@ class Base:
         if self.connection:
             self.connection.close()
 
-    def query(self, sql, params=None):
-        try:
-            self.cursor.execute(sql, params)
-            return self.cursor.fetchall()
-        except Exception as e:
-            print(f"Query failed: {e}")
-            self.connection.rollback()
-            return None
-    
-    def execute(self, sql, params=None):
-        try:
-            self.cursor.execute(sql, params)
-        except Exception as e:
-            print(f"Execution failed: {e}")
-            self.connection.rollback()
-
     def get_image_by_id(self, image_id):
-       return image.get_image_by_id(self, image_id)
-    
+        return image.get_image_by_id(self, image_id)
+
+    def get_image_by_path(self, path):
+        return image.get_image_by_path(self, path)    
+
+
     def insert_image(self, filename, original_format, gif_path = None):
-       return image.insert_image(self, filename,original_format,gif_path)
+        return image.insert_image(self, filename, original_format, gif_path)
 
     def test_connection(self):
         try:

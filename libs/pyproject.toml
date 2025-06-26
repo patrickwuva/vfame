@@ -10,7 +10,7 @@ build-backend = "setuptools.build_meta"
 requires_python = ">=3.10"
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["libs"]
 include = ["libs*"]
 
 [tool.setuptools.package-data]
